@@ -45,11 +45,13 @@ export default function SeatsPage() {
           </CaptionItem>
         </CaptionContainer>
         <FormContainer>
-          Nome do Comprador:
-          <input placeholder="Digite seu nome..." />
-          CPF do Comprador:
-          <input placeholder="Digite seu CPF..." />
-          <button>Reservar Assento(s)</button>
+            Nome do Comprador:
+            <label htmlFor="nome"></label>
+            <input id="nome" placeholder="Digite seu nome..." />
+            CPF do Comprador:
+            <label htmlFor="cpf"></label>
+            <input id="cpf" placeholder="Digite seu CPF..." />
+            <button>Reservar Assento(s)</button>
         </FormContainer>
         <FooterContainer>
           <div>
@@ -88,11 +90,12 @@ const SeatsContainer = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
-const FormContainer = styled.div`
+const FormContainer = styled.form`
   width: calc(100vw - 40px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  text-align: left;
   justify-content: space-between;
   margin: 20px 0;
   font-family: "Roboto";
@@ -181,7 +184,7 @@ const FooterContainer = styled.div`
     p {
       text-align: left;
       margin-top: -15px;
-      &:nth-child(1){
+      &:nth-child(1) {
         margin-top: 20px;
       }
     }

@@ -4,11 +4,9 @@ import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SessionsPage(props) {
-  const { movies } = props;
-  let movie = movies.find((element) => element.id === 2);
   const params = useParams();
+  const [movie, setMovie] = useState([])
   const [sessions, setSessions] = useState([]);
-  console.log(movie);
 
   useEffect(() => {
     const promise = axios.get(
@@ -16,9 +14,11 @@ export default function SessionsPage(props) {
     );
     promise.then((answer) => {
       setSessions(answer.data.days);
+      setMovie(answer.data)
+      console.log(answer)
     });
   }, []);
-  if (sessions.length === 0) {
+  if (sessions.length === 0 && movie.length === 0) {
     return <div>Carregando...</div>;
   } else {
     return (

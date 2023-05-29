@@ -2,35 +2,28 @@ import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-export default function HomePage() {
-  const [movies, setMovies] = useState([]);
+export default function HomePage(props) {
+  const { movies } = props;
 
-  useEffect(() => {
-    const promise = axios.get(
-      "https://mock-api.driven.com.br/api/v8/cineflex/movies"
-    );
-    promise.then((answer) => {
-      setMovies(answer.data);
-    });
-    promise.catch((erro) => {alert('Ocorreu um erro!')});
-  }, []);
-  if (movies.length === 0){
-    return(
-        <PageContainer>Carregando...</PageContainer>
-    )
-  }
-  else {
   return (
     <PageContainer>
       Selecione o filme
       <ListContainer>
-        {movies.map((movie) => (<MovieContainer key={movie.id}> <img src={movie.posterURL} alt={movie.title}/>
-        </MovieContainer>))}
+        {movies.map((movie) => (
+          <Link to={`/sessoes/${movie.id}`} key={movie.id}>
+            {" "}
+            <MovieContainer>
+              {" "}
+              <img src={movie.posterURL} alt={movie.title} />
+            </MovieContainer>{" "}
+          </Link>
+        ))}
       </ListContainer>
     </PageContainer>
   );
-}}
+}
 
 const PageContainer = styled.div`
   display: flex;

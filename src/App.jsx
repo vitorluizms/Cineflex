@@ -11,15 +11,32 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 export default function App() {
   axios.defaults.headers.common["Authorization"] = "4wC4CuuPziLhfX4rSqYJaE9Z";
 
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const promise = axios.get(
+      "https://mock-api.driven.com.br/api/v8/cineflex/movies"
+    );
+    promise.then((answer) => {
+      setMovies(answer.data);
+    });
+    promise.catch((erro) => {
+      alert("Ocorreu um erro!");
+    });
+  }, []);
+
   return (
     <>
       <BrowserRouter>
         <NavContainer>CINEFLEX</NavContainer>
 
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/sessoes/:idFilme" element={<SeatsPage />} />
-          <Route path="/assentos/:idSessao" element={<SessionsPage />} />
+          <Route path="/" element={<HomePage movies={movies} />} />
+          <Route path="/assentos/:idSessao" element={<SeatsPage />} />
+          <Route
+            path="/sessoes/:idFilme"
+            element={<SessionsPage movies={movies} />}
+          />
           <Route path="/sucesso" element={<SuccessPage />} />
         </Routes>
       </BrowserRouter>

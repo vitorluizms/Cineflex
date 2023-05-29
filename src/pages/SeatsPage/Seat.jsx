@@ -2,11 +2,14 @@ import { useState } from "react";
 import styled from "styled-components";
 
 export default function Seat(props) {
-  const { name, available } = props;
+  const { name, available, arrayClicked, setArrayClicked } = props;
   const [clicked, setClicked] = useState(false);
-  function seatSelect() {
-    if (clicked === false && available === true) {
+  function seatSelect(selected) {
+    let clone = [...arrayClicked];
+    clone.push(selected);
+    if (clicked === false && available === false) {
       setClicked(true);
+      setArrayClicked(clone);
     } else if (clicked === true && available === true) {
       setClicked(false);
     }
@@ -14,9 +17,9 @@ export default function Seat(props) {
   return (
     <SeatItem
       available={available}
-      disabled={!available}
+      // disabled={!available}
       clicked={clicked}
-      onClick={seatSelect}
+      onClick={() => seatSelect(name)}
     >
       {name}
     </SeatItem>
@@ -25,9 +28,18 @@ export default function Seat(props) {
 
 const SeatItem = styled.div`
   border: 1px solid
-    ${(props) => (props.available === false ? "#f7c52b" : (props.clicked === true ? "#0E7D71" : "#808F9D"))};
+    ${(props) =>
+      props.available === false
+        ? "#f7c52b"
+        : props.clicked === true
+        ? "#0E7D71"
+        : "#808F9D"};
   background-color: ${(props) =>
-    props.available === false ? "#FBE192" : (props.clicked === true ? "#1AAE9E" : "#C3CFD9")};
+    props.available === false
+      ? "#FBE192"
+      : props.clicked === true
+      ? "#1AAE9E"
+      : "#C3CFD9"};
   height: 25px;
   width: 25px;
   border-radius: 25px;

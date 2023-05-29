@@ -14,6 +14,7 @@ export default function SeatsPage() {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [arrayClicked, setArrayClicked] = useState([]);
+  const [nameSeat, setSeat] = useState([]);
 
   useEffect(() => {
     const promise = axios.get(
@@ -24,25 +25,25 @@ export default function SeatsPage() {
       setInfo(answer.data);
     });
   }, []);
-  console.log(arrayClicked);
   function buyTicket(e) {
     e.preventDefault();
-    if (arrayClicked.length !== 0) {
-      const ticket = {
-        ids: arrayClicked,
-        name: name,
-        cpf: cpf,
-      };
-      navigate('/sucesso', {state: {arrayClicked, name, cpf, infoFooter}})
-      // const promise = axios.post(
-      //   "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",
-      //   ticket
-      // );
-      // console.log(ticket);
-      // promise.then()
-    } else {
-      alert("Ocorreu um erro! Você não selecionou um assento!");
-    }
+    const url =
+      "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
+    const ticket = {
+      ids: arrayClicked,
+      name: name,
+      cpf: cpf,
+    };
+    console.log(ticket)
+    const promise = axios.post(url, ticket);
+    promise.then(() =>
+      navigate("/sucesso", {
+        state: { nameSeat, name, cpf, infoFooter },
+      })
+    );
+    promise.catch(() => {
+      alert("Não foi possível fazer o pedido, tente novamente!");
+    });
   }
   if (seats.length === 0) {
     <div>Carregando...</div>;
@@ -58,6 +59,9 @@ export default function SeatsPage() {
               available={seat.isAvailable}
               key={seat.id}
               name={seat.name}
+              nameSeat={seat.id}
+              setSeat={setSeat}
+              seatNum={nameSeat}
             />
           ))}
         </SeatsContainer>

@@ -3,8 +3,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export default function SuccessPage() {
-  const { name, cpf, arrayClicked, infoFooter } = useLocation().state;
-  console.log(name, cpf, arrayClicked, infoFooter);
+  const { name, cpf, nameSeat, infoFooter } = useLocation().state;
+  let part1 = cpf.slice(0, 3);
+  let part2 = cpf.slice(3, 6);
+  let part3 = cpf.slice(6, 9);
+  let part4 = cpf.slice(9, 11);
 
   return (
     <PageContainer>
@@ -26,7 +29,7 @@ export default function SuccessPage() {
         <strong>
           <p>Ingressos</p>
         </strong>
-        {arrayClicked.map((seat) => (
+        {nameSeat.map((seat) => (
           <p key={seat}>Assento {seat}</p>
         ))}
       </TextContainer>
@@ -36,7 +39,9 @@ export default function SuccessPage() {
           <p>Comprador</p>
         </strong>
         <p>Nome: {name}</p>
-        <p>CPF: {cpf}</p>
+        <p>
+          CPF: {part1}.{part2}.{part3}-{part4}
+        </p>
       </TextContainer>
 
       <Link to={"/"}>
@@ -66,6 +71,7 @@ const PageContainer = styled.div`
 
     background: #e8833a;
     border-radius: 3px;
+    border: none;
 
     font-family: "Roboto";
     font-style: normal;

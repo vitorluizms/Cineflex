@@ -34,7 +34,7 @@ export default function SeatsPage() {
       name: name,
       cpf: cpf,
     };
-    console.log(ticket)
+    console.log(ticket);
     const promise = axios.post(url, ticket);
     promise.then(() =>
       navigate("/sucesso", {
@@ -83,6 +83,7 @@ export default function SeatsPage() {
           Nome do Comprador:
           <label htmlFor="nome"></label>
           <input
+            data-test="client-name"
             id="nome"
             placeholder="Digite seu nome..."
             value={name}
@@ -92,15 +93,16 @@ export default function SeatsPage() {
           CPF do Comprador:
           <label htmlFor="cpf"></label>
           <input
+            data-test="client-cpf"
             id="cpf"
             placeholder="Digite seu CPF..."
             value={cpf}
             onChange={(e) => setCpf(e.target.value)}
             required
           />
-          <button>Reservar Assento(s)</button>
+          <button data-test="book-seat-btn">Reservar Assento(s)</button>
         </FormContainer>
-        <FooterContainer>
+        <FooterContainer data-test="footer">
           <div>
             <img src={infoFooter.movie.posterURL} alt="poster" />
           </div>

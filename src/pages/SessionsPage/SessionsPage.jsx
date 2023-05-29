@@ -25,20 +25,20 @@ export default function SessionsPage(props) {
       <PageContainer>
         {sessions.map((session) => (
           <div key={session.id}>
-            <SessionContainer>
+            <SessionContainer data-test="movide-day">
               {" "}
               {session.weekday} - {session.date}{" "}
               <ButtonsContainer>
                 {session.showtimes.map((time) => (
                   <Link to={`/assentos/${time.id}`} key={time.id}>
-                    <button>{time.name}</button>
+                    <button data-test="showtime">{time.name}</button>
                   </Link>
                 ))}
               </ButtonsContainer>{" "}
             </SessionContainer>
           </div>
         ))}
-        <FooterContainer>
+        <FooterContainer data-test="footer">
           <div>
             <img src={movie.posterURL} alt={movie.title} />
           </div>

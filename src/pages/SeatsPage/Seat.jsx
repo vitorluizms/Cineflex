@@ -2,32 +2,39 @@ import { useState } from "react";
 import styled from "styled-components";
 
 export default function Seat(props) {
-  const { name, available, arrayClicked, setArrayClicked, nameSeat, seatNum, setSeat } = props;
+  const {
+    name,
+    available,
+    arrayClicked,
+    setArrayClicked,
+    nameSeat,
+    seatNum,
+    setSeat,
+  } = props;
   const [clicked, setClicked] = useState(false);
   function seatSelect(selected) {
     let clone = [...arrayClicked];
-    let cloneName = [...seatNum]
+    let cloneName = [...seatNum];
     if (available === false) {
       alert("Esse assento não está disponível!");
     }
     if (clicked === false && available === true) {
       clone.push(nameSeat);
-      cloneName.push(selected)
+      cloneName.push(selected);
       setClicked(true);
       setArrayClicked(clone);
-      setSeat(cloneName)
-
+      setSeat(cloneName);
     } else if (clicked === true && available === true) {
       setClicked(false);
       clone.pop();
-      cloneName.pop()
+      cloneName.pop();
       setArrayClicked(clone);
-      setSeat(cloneName)
-
+      setSeat(cloneName);
     }
   }
   return (
     <SeatItem
+      data-test="seat"
       available={available}
       disabled={!available}
       clicked={clicked}

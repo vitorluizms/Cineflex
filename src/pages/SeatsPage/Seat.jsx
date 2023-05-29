@@ -6,12 +6,14 @@ export default function Seat(props) {
   const [clicked, setClicked] = useState(false);
   function seatSelect(selected) {
     let clone = [...arrayClicked];
-    clone.push(selected);
-    if (clicked === false && available === false) {
+    if (clicked === false && available === true) {
+      clone.push(selected);
       setClicked(true);
       setArrayClicked(clone);
     } else if (clicked === true && available === true) {
       setClicked(false);
+      clone.pop();
+      setArrayClicked(clone);
     }
   }
   return (

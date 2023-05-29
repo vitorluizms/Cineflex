@@ -12,8 +12,8 @@ export default function SeatsPage() {
   const [seats, setSeats] = useState([]);
   const [infoFooter, setInfo] = useState([]);
   const [name, setName] = useState("");
-  const [cpf, setCpf] = useState("");   
-  const [arrayClicked, setArrayClicked] = useState([])
+  const [cpf, setCpf] = useState("");
+  const [arrayClicked, setArrayClicked] = useState([]);
 
   useEffect(() => {
     const promise = axios.get(
@@ -24,21 +24,25 @@ export default function SeatsPage() {
       setInfo(answer.data);
     });
   }, []);
+  console.log(arrayClicked);
   function buyTicket(e) {
-
-    e.preventDefault()
-    const object = axios.post()
-    console.log(name)
-    console.log(cpf)
-
-    const ticket = {
-      ids: arrayClicked,
-      name: name,
-      cpf: cpf
+    e.preventDefault();
+    if (arrayClicked.length !== 0) {
+      const ticket = {
+        ids: arrayClicked,
+        name: name,
+        cpf: cpf,
+      };
+      navigate('/sucesso', {state: {arrayClicked, name, cpf, infoFooter}})
+      // const promise = axios.post(
+      //   "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",
+      //   ticket
+      // );
+      // console.log(ticket);
+      // promise.then()
+    } else {
+      alert("Ocorreu um erro! Você não selecionou um assento!");
     }
-    console.log(ticket)
-    // const promise = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", ticket)
-    
   }
   if (seats.length === 0) {
     <div>Carregando...</div>;
@@ -48,7 +52,13 @@ export default function SeatsPage() {
         Selecione o(s) assento(s)
         <SeatsContainer>
           {seats.map((seat) => (
-            <Seat arrayClicked={arrayClicked} setArrayClicked={setArrayClicked} available={seat.isAvailable} key={seat.id} name={seat.name} />
+            <Seat
+              arrayClicked={arrayClicked}
+              setArrayClicked={setArrayClicked}
+              available={seat.isAvailable}
+              key={seat.id}
+              name={seat.name}
+            />
           ))}
         </SeatsContainer>
         <CaptionContainer>

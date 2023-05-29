@@ -8,60 +8,63 @@ import { useEffect } from "react";
 export default function SeatsPage() {
   const params = useParams();
   const [seats, setSeats] = useState([]);
-  const [clicked, setClicked] = useState(false);
+  const [infoFooter, setInfo] = useState([]);
+
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${params.idSessao}/seats`
     );
     promise.then((answer) => {
       setSeats(answer.data.seats);
+      setInfo(answer.data);
     });
   }, []);
-  return (
-    <PageContainer>
-      Selecione o(s) assento(s)
-      <SeatsContainer>
-        {seats.map((seat) => (
-          <Seat available={seat.isAvailable} key={seat.id} name={seat.name} />
-        ))}
-      </SeatsContainer>
-      <CaptionContainer>
-        <CaptionItem>
-          <CaptionCircle />
-          Selecionado
-        </CaptionItem>
-        <CaptionItem>
-          <CaptionCircle />
-          Disponível
-        </CaptionItem>
-        <CaptionItem>
-          <CaptionCircle />
-          Indisponível
-        </CaptionItem>
-      </CaptionContainer>
-      <FormContainer>
-        Nome do Comprador:
-        <input placeholder="Digite seu nome..." />
-        CPF do Comprador:
-        <input placeholder="Digite seu CPF..." />
-        <button>Reservar Assento(s)</button>
-      </FormContainer>
-      <FooterContainer>
-        <div>
-          <img
-            src={
-              "https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"
-            }
-            alt="poster"
-          />
-        </div>
-        <div>
-          <p>Tudo em todo lugar ao mesmo tempo</p>
-          <p>Sexta - 14h00</p>
-        </div>
-      </FooterContainer>
-    </PageContainer>
-  );
+  if (seats.length === 0) {
+    <div>Carregando...</div>;
+  } else {
+    return (
+      <PageContainer>
+        Selecione o(s) assento(s)
+        <SeatsContainer>
+          {seats.map((seat) => (
+            <Seat available={seat.isAvailable} key={seat.id} name={seat.name} />
+          ))}
+        </SeatsContainer>
+        <CaptionContainer>
+          <CaptionItem>
+            <CaptionCircle />
+            Selecionado
+          </CaptionItem>
+          <CaptionItem>
+            <CaptionCircle />
+            Disponível
+          </CaptionItem>
+          <CaptionItem>
+            <CaptionCircle />
+            Indisponível
+          </CaptionItem>
+        </CaptionContainer>
+        <FormContainer>
+          Nome do Comprador:
+          <input placeholder="Digite seu nome..." />
+          CPF do Comprador:
+          <input placeholder="Digite seu CPF..." />
+          <button>Reservar Assento(s)</button>
+        </FormContainer>
+        <FooterContainer>
+          <div>
+            <img src={infoFooter.movie.posterURL} alt="poster" />
+          </div>
+          <div>
+            <p>{infoFooter.movie.title}</p>
+            <p>
+              {infoFooter.day.weekday} {infoFooter.name}
+            </p>
+          </div>
+        </FooterContainer>
+      </PageContainer>
+    );
+  }
 }
 
 const PageContainer = styled.div`
@@ -175,6 +178,7 @@ const FooterContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     p {
       text-align: left;
       &:nth-child(2) {

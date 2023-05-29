@@ -125,14 +125,13 @@ const FooterContainer = styled.div`
   }
 
   div:nth-child(2) {
+    width: 217px;
+    max-height: 50px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     p {
       text-align: left;
-      &:nth-child(2) {
-        margin-top: 10px;
-      }
     }
   }
 `;

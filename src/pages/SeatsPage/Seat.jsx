@@ -25,9 +25,9 @@ export default function Seat(props) {
 
 const SeatItem = styled.div`
   border: 1px solid
-    ${(props) => (props.available === false ? "#f7c52b" : "#808F9D")};
+    ${(props) => (props.available === false ? "#f7c52b" : (props.clicked === true ? "#0E7D71" : "#808F9D"))};
   background-color: ${(props) =>
-    props.available === false ? "#FBE192" : "#C3CFD9"};
+    props.available === false ? "#FBE192" : (props.clicked === true ? "#1AAE9E" : "#C3CFD9")};
   height: 25px;
   width: 25px;
   border-radius: 25px;

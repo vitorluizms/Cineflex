@@ -18,34 +18,37 @@ export default function SessionsPage(props) {
       setSessions(answer.data.days);
     });
   }, []);
-
-  return (
-    <PageContainer>
-      {sessions.map((session) => (
-        <div key={session.id}>
-          <SessionContainer>
-            {" "}
-            {session.weekday} - {session.date}{" "}
-            <ButtonsContainer>
-              {session.showtimes.map((time) => (
-                <Link to={`/assentos/${time.id}`} key={time.id}>
-                  <button>{time.name}</button>
-                </Link>
-              ))}
-            </ButtonsContainer>{" "}
-          </SessionContainer>
-        </div>
-      ))}
-      <FooterContainer>
-        <div>
-          <img src={movie.posterURL} alt={movie.title} />
-        </div>
-        <div>
-          <p>{movie.title}</p>
-        </div>
-      </FooterContainer>
-    </PageContainer>
-  );
+  if (sessions.length === 0) {
+    return <div>Carregando...</div>;
+  } else {
+    return (
+      <PageContainer>
+        {sessions.map((session) => (
+          <div key={session.id}>
+            <SessionContainer>
+              {" "}
+              {session.weekday} - {session.date}{" "}
+              <ButtonsContainer>
+                {session.showtimes.map((time) => (
+                  <Link to={`/assentos/${time.id}`} key={time.id}>
+                    <button>{time.name}</button>
+                  </Link>
+                ))}
+              </ButtonsContainer>{" "}
+            </SessionContainer>
+          </div>
+        ))}
+        <FooterContainer>
+          <div>
+            <img src={movie.posterURL} alt={movie.title} />
+          </div>
+          <div>
+            <p>{movie.title}</p>
+          </div>
+        </FooterContainer>
+      </PageContainer>
+    );
+  }
 }
 
 const PageContainer = styled.div`
@@ -125,13 +128,14 @@ const FooterContainer = styled.div`
   }
 
   div:nth-child(2) {
-    width: 217px;
-    max-height: 50px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     p {
       text-align: left;
+      &:nth-child(2) {
+        margin-top: 10px;
+      }
     }
   }
 `;

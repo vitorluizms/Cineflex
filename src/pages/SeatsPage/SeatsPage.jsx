@@ -177,12 +177,12 @@ const FooterContainer = styled.div`
   div:nth-child(2) {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+    align-items: center;
     p {
       text-align: left;
-      &:nth-child(2) {
-        margin-top: 10px;
+      margin-top: -15px;
+      &:nth-child(1){
+        margin-top: 20px;
       }
     }
   }

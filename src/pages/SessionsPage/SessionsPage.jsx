@@ -25,7 +25,7 @@ export default function SessionsPage(props) {
       <PageContainer>
         {sessions.map((session) => (
           <div key={session.id}>
-            <SessionContainer data-test="movide-day">
+            <SessionContainer data-test="movie-day">
               {" "}
               {session.weekday} - {session.date}{" "}
               <ButtonsContainer>
